@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Caso 2731</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .flex-container {
+              display: flex;
+              padding: 2px;
+            }
+            
+            text {
+                pointer-events: none;
+            }
+
+            .node:hover {
+                stroke: #e27171;
+                stroke-opacity: .6;
+                stroke-width: 4px;
+            }
+
+            .link {
+                stroke: #999;
+                stroke-opacity: .6;
+            }
+        </style>
+    </head>
+    <body>
+        <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <div id= "App"  style="width: 1200px;">
+            <div class= "flex-container" style="justify-content: space-evenly;">
+                <div id = "controles" class= "flex-container" style="width:200px; justify-content: space-evenly;align-items: center;" >
+                    
+                        <div id="bReiniciarRed"><i class="fa fa-rotate-left"></i></div>
+                        <div><i class="fa fa-circle-play fa-4x"></i></div>
+                        <div><i class="fa fa-forward-step"></i></div>
+                    
+                </div>
+                <div class= "flex-container" style="width:200px; flex-direction: column; justify-content: space-evenly;align-items: flex-start;">
+                    <div>Epocas</div>
+                    <div style=" font-size: 250%;">00,000</div>
+                </div>
+                <div>
+                    <div id= "data selector" style="display: flex; flex-direction: column; justify-content: center; width: 100px">
+                        <div class= "flex-container" style="justify-content: center">
+                            <label for="data-selector">Activacion</label>
+                        </div>  
+                        <select name="data-selector" id="data-selector"> 
+                            <option value="and">Lineal</option> 
+                            <option value="or">Sigmoide</option> 
+                            <option value="xor">Tan H</option> 
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-container">
+                <div id= "redNeuronal" >
+                    <div class= "flex-container">
+                        <div id= "data selector" style="display: flex; flex-direction: column; justify-content: center; width: 100px">
+                            <div class= "flex-container" style="justify-content: center">
+                                <label for="data-selector">Datasets</label>
+                            </div>  
+                            <select name="data-selector" id="data-selector"> 
+                                <option value="and">AND</option> 
+                                <option value="or">OR</option> 
+                                <option value="xor">XOR</option> 
+                            </select>
+                        </div>
+                        <div id= "capasOcultas" class= "flex-container" style="justify-content: center;  width: 600px;">
+                            <div class= "flex-container" style="flex-direction: column; width: 120px;">
+                                <div class= "flex-container" style="justify-content: space-evenly">
+                                    <div id = "bAgregaOcultas" ><i class="fa fa-circle-plus"></i></div>
+                                    <div id = "bRemueveOcultas"><i class="fa fa-circle-minus"></i></div>
+                                    <div id="bReiniciarEstructura"><i class="fa fa-trash-can"></i></div>
+                                </div>
+                                <div id= "infoOcultas" class= "flex-container" style="justify-content: center">
+                                    0 Capas Ocultas
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class= "flex-container" style="width: 710px; height: 40px">
+                        <div style="margin-left: 10px; width: 60px; height: 40px">
+                            <div  >
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div id="bAgregaEntrada"><i class="fa fa-circle-plus"></i></div>
+                                    <div id="bRemueveEntrada"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id= "infoEntradas">1 nodo</div>
+                            </div>
+                        </div>
+                        <div id= "grupoNodo" class= "flex-container" style="justify-content: space-evenly; margin-left: 20px; width: 620px;" >
+                            <div id="nodoOculto1" style="display:none;">
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="1" id="bAgregaNodoOculto"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="1" id="bRemueveNodoOculto"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto1">1 nodo</div>
+                            </div>
+                            <div id="nodoOculto2" style="display:none;">
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="2" id="bAgregaNodoOculto2"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="2" id="bRemueveNodoOculto2"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto2">1 nodo</div>
+                            </div>
+                            <div id="nodoOculto3" style="display:none;" >
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="3" id="bAgregaNodoOculto3"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="3" id="bRemueveNodoOculto3"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto3">1 nodo</div>
+                            </div>
+                            <div id="nodoOculto4" style="display:none;" >
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="4" id="bAgregaNodoOculto4"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="4" id="bRemueveNodoOculto4"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto4">1 nodo</div>
+                            </div>
+                            <div id="nodoOculto5" style="display:none;">
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="5" id="bAgregaNodoOculto5"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="5" id="bRemueveNodoOculto5"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto5">1 nodo</div>
+                            </div>
+                            <div id="nodoOculto6" style="display:none;">
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="6" id="bAgregaNodoOculto6"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="6" id="bRemueveNodoOculto6"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto6">1 nodo</div>
+                            </div>
+                            <div id="nodoOculto7" style="display:none;">
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="7" id="bAgregaNodoOculto7"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="7" id="bRemueveNodoOculto7"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto7">1 nodo</div>
+                            </div>
+                            <div id="nodoOculto8" style="display:none;" >
+                                <div class= "flex-container" style="justify-content: space-around;">
+                                    <div ori="8" id="bAgregaNodoOculto8"><i class="fa fa-circle-plus"></i></div>
+                                    <div ori="8" id="bRemueveNodoOculto8"><i class="fa fa-circle-minus"></i></div>
+                                </div>
+                                <div id = "infoNodoOculto8">1 nodo</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="nn"></div>
+                </div>
+                <div>
+                    <div style="height: 114px;"></div>
+                    <div id="resultado" style="width: 400px; height: 400px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="Dibujo.js"></script>
+        <script src="Matematicas.js"></script>
+        <script src="Utils.js"></script>
+        <script src="Cerebro.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
