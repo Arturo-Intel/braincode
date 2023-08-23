@@ -7,9 +7,34 @@ var Cerebro = function(t,e) {
             this.b = Matematicas.matrixRand(1, n_neur);       //tantos como neuronas en la capa
             this.W = Matematicas.matrixRand(n_conn, n_neur);  //tantas cnx como # neuronas hubiera en la capa anterior y # de neuronas en la capa acutual
         }
-    }
+    };
+    function fordwardPass(red_neuronal, out){
+        for(const [l, capa] of red_neuronal.entries()) {
+            //console.log(out[out.length-1][1].map((d) => d.join(" ")).join("\n") )
+            //console.log(red_neuronal[l].W.map((d) => d.join(" ")).join("\n"));
+            
+        //     //z = out[-1][1] @ neural_net[l].W + neural_net[l].b
+            z = [];
+            temp = Matematicas.matrixMult(out[out.length-1][1], red_neuronal[l].W); 
+      
+        //     //z = matrizVectorOp(temp,red_neuronal[l].b, "+");
+        //     a =[];
+        //     for(let i = 0; i < z.length; i++){
+        //       let aa = [];
+        //       for(let j = 0; j < z[i].length; j++) {
+        //         aa.push(red_neuronal[l].act_f(z[i][j]));
+        //       }
+        //       a.push(aa);
+        //     }
+        //     out.push([z, a]);
+        }
+        return out;
+    };
+
+
     return {
-        inicializar: function(topologia) {
+        inicializar: (topologia) =>{
+            console.log("Inicializando Red Neuronal => ["+ topologia+"]");
             let nn = [];
             for (const [i, e] of topologia.entries()) {
                 if (i+1 < topologia.length) {
@@ -18,7 +43,7 @@ var Cerebro = function(t,e) {
             }
             return nn;
         },
-        datosGrafo: function(red_neuronal){
+        datosGrafo: (red_neuronal) =>{
             datos = [];
 
             for (const [i, e] of red_neuronal.entries()) {
@@ -36,7 +61,17 @@ var Cerebro = function(t,e) {
             //agregamos la salida
             datos.push({"color": "salmon", "label": "o", "layer": topologia.length});
             return datos;
+        },
+        entrenar: (red_neuronal, X, Y, lr, entrenar) => {
+            let out = [[NaN, X]];
+            out = fordwardPass(red_neuronal, out);
+            if (entrenar) {
+                //backwardPass(out);
+                //descensoGradiente(out);
+            }
+            return out[out.length -1 ][1];
         }
+
     } 
 }();
 

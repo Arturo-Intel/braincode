@@ -182,28 +182,7 @@ var Dibujo = function() {
                 .attr("dy", ".35em")
                 .text(function(d) { return d.label; });
 
-            document.getElementById("bAgregaEntrada").onclick = agregaEntradaBoton;
-            document.getElementById("bRemueveEntrada").onclick = removerEntradaBoton;
-            document.getElementById("bAgregaOcultas").onclick = agregaOcultaBoton;
-            document.getElementById("bRemueveOcultas").onclick = removerOcultaBoton;
-            document.getElementById("bAgregaNodoOculto").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bAgregaNodoOculto2").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bAgregaNodoOculto3").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bAgregaNodoOculto4").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bAgregaNodoOculto5").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bAgregaNodoOculto6").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bAgregaNodoOculto7").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bAgregaNodoOculto8").onclick = agregarNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto").onclick = removerNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto2").onclick = removerNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto3").onclick = removerNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto4").onclick = removerNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto5").onclick = removerNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto6").onclick = removerNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto7").onclick = removerNodoOcultoBoton;
-            document.getElementById("bRemueveNodoOculto8").onclick = removerNodoOcultoBoton;
-
-            document.getElementById("bReiniciarEstructura").onclick = reiniciar;
+            Dibujo.habilitar();
 
             agrupador(nodes[0].x - 30, 10, 60, height, "groupRectEntrada");
             agrupador(90, 10, 620, height, "groupRectOculta");
@@ -237,6 +216,53 @@ var Dibujo = function() {
                 .attr("transform", "translate(50, " + xAxisTranslate  +")")
                 .call(x_axis)
 
+        },
+        deshabilitar: () => {
+            document.getElementById("bAgregaEntrada").onclick = 
+            document.getElementById("bRemueveEntrada").onclick = 
+            document.getElementById("bAgregaOcultas").onclick = 
+            document.getElementById("bRemueveOcultas").onclick = 
+            document.getElementById("bAgregaNodoOculto").onclick = 
+            document.getElementById("bAgregaNodoOculto2").onclick = 
+            document.getElementById("bAgregaNodoOculto3").onclick = 
+            document.getElementById("bAgregaNodoOculto4").onclick = 
+            document.getElementById("bAgregaNodoOculto5").onclick = 
+            document.getElementById("bAgregaNodoOculto6").onclick = 
+            document.getElementById("bAgregaNodoOculto7").onclick = 
+            document.getElementById("bAgregaNodoOculto8").onclick = 
+            document.getElementById("bRemueveNodoOculto").onclick = 
+            document.getElementById("bRemueveNodoOculto2").onclick = 
+            document.getElementById("bRemueveNodoOculto3").onclick = 
+            document.getElementById("bRemueveNodoOculto4").onclick = 
+            document.getElementById("bRemueveNodoOculto5").onclick = 
+            document.getElementById("bRemueveNodoOculto6").onclick = 
+            document.getElementById("bRemueveNodoOculto7").onclick = 
+            document.getElementById("bRemueveNodoOculto8").onclick = 
+            document.getElementById("bReiniciarEstructura").onclick = NaN;
+        },
+        habilitar: () => {
+            document.getElementById("bAgregaEntrada").onclick = agregaEntradaBoton;
+            document.getElementById("bRemueveEntrada").onclick = removerEntradaBoton;
+            document.getElementById("bAgregaOcultas").onclick = agregaOcultaBoton;
+            document.getElementById("bRemueveOcultas").onclick = removerOcultaBoton;
+            document.getElementById("bAgregaNodoOculto").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bAgregaNodoOculto2").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bAgregaNodoOculto3").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bAgregaNodoOculto4").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bAgregaNodoOculto5").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bAgregaNodoOculto6").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bAgregaNodoOculto7").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bAgregaNodoOculto8").onclick = agregarNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto").onclick = removerNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto2").onclick = removerNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto3").onclick = removerNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto4").onclick = removerNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto5").onclick = removerNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto6").onclick = removerNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto7").onclick = removerNodoOcultoBoton;
+            document.getElementById("bRemueveNodoOculto8").onclick = removerNodoOcultoBoton;
+
+            document.getElementById("bReiniciarEstructura").onclick = reiniciar;
         }
     }
 }();

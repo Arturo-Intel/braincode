@@ -167,7 +167,8 @@ class CapaNeuronal {
         this.act_f = act_f;
         this.act_f_d = act_f_d;
         this.b = rand(1, n_neur);       //tantos como neuronas en la capa
-        this.W = rand(n_conn, n_neur);  //tantas cnx como # neuronas hubiera en la capa anterior y # de neuronas en la capa acutual
+        this.W = rand(n_conn, n_neur);  //tantas cnx como # neuronas hubiera en la capa anterior y 
+                                        // # de neuronas en la capa acutual
     }
 }
 
