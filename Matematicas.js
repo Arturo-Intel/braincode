@@ -14,33 +14,29 @@ var Matematicas = function(t,e){
             }
             return t/v.length;
         },
-        // Array dimension checker
-        // Returns:
-        //   false when array dimensions are different
-        //   an Array when is rectangular 0d (i.e. an object) or >=1d
-        arrayDimension : (a) => {
-            // Make sure it is an array
+        // Obtenemos un array con las dimensiones de la matriz (4x2, 3x4, etc)
+        revisarDimension : (a) => {
+            // Nos aseguramos primero que sea un array
             if (a instanceof Array) {
-                // First element is an array
-                var sublength = Matematicas.arrayDimension(a[0]);
-                if (sublength === false) {
-                    // Dimension is different
+                // Verificar que el primer elemento es una array
+                var pedazo = Matematicas.arrayDimension(a[0]);
+                if (pedazo === false) {
+                    // la dimension es diferente
                     return false;
                 } else {
-                    // Compare every element to make sure they are of the same dimensions
+                    // Compara cada elemento para asegurarnos que son de la misma dimension
                     for (var i = 1; i < a.length; i++) {
-                        var _sublength = Matematicas.arrayDimension(a[i]);
-                        // HACK: compare arrays...
-                        if (_sublength === false || sublength.join(",") != _sublength.join(",")) {
-                            // If the dimension is different (i.e. not rectangular)
+                        var _pedazo = Matematicas.arrayDimension(a[i]);
+                        if (_pedazo === false || pedazo.join(",") != _pedazo.join(",")) {
+                            // Si la dimension es diferente, no es rectangular
                             return false;
                         }
                     }
-                    // OK now it is "rectangular" (could you call 3d "rectangular"?)
-                    return [a.length].concat(sublength);
+                    // la dimension es igual, la matriz es rectangular
+                    return [a.length].concat(pedazo);
                 }
             } else {
-                // Not an array
+                // No es un arreglo
                 return [];
             }
         },
