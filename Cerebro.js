@@ -8,26 +8,23 @@ var Cerebro = function(t,e) {
             this.W = Matematicas.matrixRand(n_conn, n_neur);  //tantas cnx como # neuronas hubiera en la capa anterior y # de neuronas en la capa acutual
         }
     };
+
     function fordwardPass(red_neuronal, out){
         for(const [l, capa] of red_neuronal.entries()) {
-            //console.log(out[out.length-1][1].map((d) => d.join(" ")).join("\n") )
-            //console.log(red_neuronal[l].W.map((d) => d.join(" ")).join("\n"));
-            
-        //     //z = out[-1][1] @ neural_net[l].W + neural_net[l].b
-            z = [];
-            temp = Matematicas.matrixMult(out[out.length-1][1], red_neuronal[l].W); 
-      
-        //     //z = matrizVectorOp(temp,red_neuronal[l].b, "+");
-        //     a =[];
-        //     for(let i = 0; i < z.length; i++){
-        //       let aa = [];
-        //       for(let j = 0; j < z[i].length; j++) {
-        //         aa.push(red_neuronal[l].act_f(z[i][j]));
-        //       }
-        //       a.push(aa);
-        //     }
-        //     out.push([z, a]);
+            //z = out[-1][1] @ neural_net[l].W + neural_net[l].b
+            //z = [];
+            let z = Matematicas.matrixMult(out[out.length-1][1], red_neuronal[l].W); 
+            //z = matrizVectorOp(temp,red_neuronal[l].b, "+");
+            a =[];
+            for(let i = 0; i < z.length; i++){
+                let aa = [];
+                // funcion de activación
+                aa.push(Matematicas.sigm(z[i]));
+                a.push(aa);
+            }
+            out.push([z, a]);
         }
+        
         return out;
     };
 
@@ -38,7 +35,7 @@ var Cerebro = function(t,e) {
             let nn = [];
             for (const [i, e] of topologia.entries()) {
                 if (i+1 < topologia.length) {
-                    nn.push(new CapaNeuronal(e, topologia[i+1], fun_act))
+                    nn.push(new CapaNeuronal(e, topologia[i+1], Matematicas.l2_cost))
                 }
             }
             return nn;
@@ -65,6 +62,7 @@ var Cerebro = function(t,e) {
         entrenar: (red_neuronal, X, Y, lr, entrenar) => {
             let out = [[NaN, X]];
             out = fordwardPass(red_neuronal, out);
+            console.log(out);
             if (entrenar) {
                 //backwardPass(out);
                 //descensoGradiente(out);

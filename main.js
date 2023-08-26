@@ -34,10 +34,10 @@ let epocas = 0;
 let loss =[] //?
 let detenido = true;
 
+console.log(X)
 
 function computar () {
   let pY = Cerebro.entrenar(nn, X, Y,  LR, true);
-  detenido=true;
   if (epocas % 25 == 0) {
     loss.push(Matematicas.l2_cost(pY, Y));
     // for(const [i, x0] of _x0.entries()) { 
@@ -47,11 +47,12 @@ function computar () {
     // }
   }
   epocas += 1;
+  //debug una sola ejecucuion
+  detenido=true;
 }
 
 function actualizar () {
     if(!detenido){
-        
         computar();
         tmpStr = epocas.toString().padStart(5, '0');
         document.getElementById("epocasCounter").innerHTML = tmpStr.slice(0,2) + "," + tmpStr.slice(2);
