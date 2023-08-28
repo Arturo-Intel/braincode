@@ -56,14 +56,13 @@
                     <div id = "epocasCounter" style=" font-size: 250%;">00,000</div>
                 </div>
                 <div>
-                    <div id= "data selector" style="display: flex; flex-direction: column; justify-content: center; width: 100px">
+                    <div  style="display: flex; flex-direction: column; justify-content: center; width: 100px">
                         <div class= "flex-container" style="justify-content: center">
                             <label for="data-selector">Activacion</label>
                         </div>  
-                        <select name="data-selector" id="data-selector"> 
-                            <option value="and">Lineal</option> 
-                            <option value="or">Sigmoide</option> 
-                            <option value="xor">Tan H</option> 
+                        <select id= "sFunActivacion" name="data-selector" > 
+                            <option value="sigm">Sigmoide</option> 
+                            <option value="tanh">Tangente H</option> 
                         </select>
                     </div>
                 </div>
@@ -105,7 +104,7 @@
                             </div>
                         </div>
                         <div id= "grupoNodo" class= "flex-container" style="justify-content: space-evenly; margin-left: 20px; width: 620px;" >
-                            <div id="nodoOculto1" style="display:none;">
+                            <div id="nodoOculto1" style="display:block;">
                                 <div class= "flex-container" style="justify-content: space-around;">
                                     <div ori="1" id="bAgregaNodoOculto"><i class="fa fa-circle-plus"></i></div>
                                     <div ori="1" id="bRemueveNodoOculto"><i class="fa fa-circle-minus"></i></div>
