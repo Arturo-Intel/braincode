@@ -38,11 +38,7 @@ let func_act_d = Matematicas.sigm_d;
 console.log("Inicio");
 dibujar();
 
-
-
-
-
-Plotly.newPlot( 'resultado', [{
+Plotly.newPlot( 'loss', [{
       x: Matematicas.rango(0, loss.length),
       y: loss,
       mode: 'lines'
@@ -62,7 +58,7 @@ function  selecionarFunAct(control){
 
 function dibujarGrafica(){
 
-    Plotly.animate('resultado', {
+    Plotly.animate('loss', {
         data: [{x: Matematicas.rango(0, loss.length), y: loss}]
     }, {
 
@@ -77,7 +73,10 @@ function dibujarGrafica(){
         range: Matematicas.rango(0, loss.length)
       }
     });
-    Plotly.relayout('resultado', {mode: 'lines'})
+
+    Plotly.relayout('loss', {   mode: 'lines', 
+                                margin: { t: 50 } 
+                            })
 }
 
 function computar () {
@@ -104,7 +103,7 @@ function actualizar () {
         
         tmpStr = epocas.toString().padStart(5, '0');
         document.getElementById("epocasCounter").innerHTML = tmpStr.slice(0,2) + "," + tmpStr.slice(2);
-        document.getElementById("loss").innerHTML = loss[loss.length-1];
+        document.getElementById("algo").innerHTML = loss[loss.length-1];
     }
     requestAnimationFrame(actualizar);
 }
@@ -143,5 +142,4 @@ function dibujar() {
     Dibujo.inicializar("#nn", "svg1", svg_grafos_canvas_w, svg_grafos_canvas_h );
     let grafo = Cerebro.datosGrafo(nn);
     Dibujo.grafo(grafo);
-    Dibujo.resultado();
 }
