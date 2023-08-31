@@ -2,6 +2,7 @@ var Dibujo = function() {
     var svg, svg2;
     var width, height;
     var nodeSize = 20;
+    let _nodes;
     //var color = d3.scale.category20();
 
     function agrupador (x, y, w , h, objId) {
@@ -99,7 +100,7 @@ var Dibujo = function() {
         },
         grafo: (nodes) => {
             var netsize = {};
-
+            
             // obtenemos el tamaño de nuestras capas y lo anexamos a la estructura nodes
             nodes.forEach(function (d) {
 
@@ -137,11 +138,11 @@ var Dibujo = function() {
             nodes.map(function(d, i) {
                 for (var n in nodes) {
                     if (d.layer + 1 == nodes[n].layer) {
-                        links.push({"source": parseInt(i), "target": parseInt(n), "value": 1}) 
+                         links.push({"source": parseInt(i), "target": parseInt(n), "value": 1}) 
                     }
                 }
             }).filter(function(d) { return typeof d !== "undefined"; });
-
+            _nodes = nodes;
             // dibujamos las lineas usando los datos de la estructura links
             var link = svg.selectAll(".link")
                 .data(links)
@@ -153,13 +154,13 @@ var Dibujo = function() {
                 .attr("y2", function(d) { return nodes[d.target].y; })
                 .style("stroke-width", function(d) { return Math.sqrt(d.value); });
             
-            svg.append("line")
-                .attr("class", "link")
-                .attr("x1", function(d) { return nodes[nodes.length-1].x; })
-                .attr("y1", function(d) { return nodes[nodes.length-1].y; })
-                .attr("x2", width)
-                .attr("y2", function(d) { return nodes[nodes.length-1].y; })
-                .style("stroke-width", 3);
+            // svg.append("line")
+            //     .attr("class", "link")
+            //     .attr("x1", function(d) { return nodes[nodes.length-1].x; })
+            //     .attr("y1", function(d) { return nodes[nodes.length-1].y; })
+            //     .attr("x2", width)
+            //     .attr("y2", function(d) { return nodes[nodes.length-1].y; })
+            //     .style("stroke-width", 3);
 
 
             // dibujamos los nodos usando los datos de la estructura nodes
@@ -182,11 +183,12 @@ var Dibujo = function() {
                 .attr("dy", ".35em")
                 .text(function(d) { return d.label; });
 
-            Dibujo.habilitar();
-
-            agrupador(nodes[0].x - 30, 10, 60, height, "groupRectEntrada");
+            
+        },
+        agrupadores: () => {
+            agrupador(_nodes[0].x - 30, 10, 60, height, "groupRectEntrada");
             agrupador(90, 10, 620, height, "groupRectOculta");
-            agrupador(nodes[nodes.length-1].x - 30, 10, 60, height, "groupRectOculta");
+            agrupador(_nodes[_nodes.length-1].x - 30, 10, 60, height, "groupRectOculta");
         },
         resultado: () => {
             var data = [10, 15, 20, 25, 30];

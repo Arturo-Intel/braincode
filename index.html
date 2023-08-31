@@ -32,8 +32,14 @@
                 overflow-y: auto;
                 width: 1200px;
             }
-            #resultado {
+            #redNeuronal, #extras{
                 border: 1px solid black;
+            }
+            #extras {
+                border-left: 0;
+            }
+            #resultado {
+                border-bottom: 1px solid black;
             }
         </style>
     </head>
@@ -74,10 +80,11 @@
                             <div class= "flex-container" style="justify-content: center">
                                 <label for="data-selector">Datasets</label>
                             </div>  
-                            <select name="data-selector2" id="data-selector2"> 
+                            <select name="data-selector2" id="sDataSets"> 
                                 <option value="and">AND</option> 
                                 <option value="or">OR</option> 
                                 <option value="xor">XOR</option> 
+                                <option value="circulos">circulos</option>
                             </select>
                         </div>
                         <div id= "capasOcultas" class= "flex-container" style="justify-content: center;  width: 600px;">
@@ -165,10 +172,10 @@
                     </div>
                     <div id="nn"></div>
                 </div>
-                <div>
+                <div id="extras">
                     <div id ="algo" style="height: 110px;"></div>
                     <div id ="resultado" style="width: 400px; height: 400px;"></div>
-                    <div id ="loss" style="height: 250px;"></div>
+                    <div id ="loss" style="height: 200px;"></div>
                 </div>
             </div>
         </div>

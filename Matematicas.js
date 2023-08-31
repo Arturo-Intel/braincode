@@ -123,15 +123,7 @@ var Matematicas = function(t,e){
             for(let i = 0; i < M.length; i++){
                 let rr = [];
                 for(let j = 0; j < M[i].length; j++) {
-                    let t ;
-                    if(M.length != N.length){
-                      t = N.length;
-                    } else {
-                      t = N[i].length;
-                    }
-                    for(let k = 0; k < t; k++) {
-                        rr.push(M[i][j] * N[k][j]);
-                    }
+                  rr.push(M[i][j] * N[i][j]);
                 }
                 res.push(rr)
             }
@@ -169,7 +161,7 @@ var Matematicas = function(t,e){
             }
             return r;
         }, 
-        //coste - Error cuadratico medio
+        //funcion de coste - Error cuadratico medio
         l2_cost: (Yp=array, Yr=array) => { //mean( (Yp - Yr) ** 2)
             t = []
             for(let i = 0; i < Yp.length; i++) {
