@@ -103,6 +103,7 @@ var Cerebro = function(t,e) {
       return datos;
     },
     entrenar: (red_neuronal, X, entrenar) => {
+      
       let out = [[NaN, X]];
       out = fordwardPass(red_neuronal, out);
       if (entrenar) {

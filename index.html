@@ -58,13 +58,13 @@
                     
                 </div>
                 <div class= "flex-container" style="width:200px; flex-direction: column; justify-content: space-evenly;align-items: flex-start;">
-                    <div>Epocas</div>
+                    <div>Épocas</div>
                     <div id = "epocasCounter" style=" font-size: 250%;">00,000</div>
                 </div>
                 <div>
-                    <div  style="display: flex; flex-direction: column; justify-content: center; width: 100px">
+                    <div  style="display: flex; flex-direction: column; justify-content: center; width: 150px">
                         <div class= "flex-container" style="justify-content: center">
-                            <label for="data-selector">Activacion</label>
+                            <label for="data-selector">Funcion de Activacion</label>
                         </div>  
                         <select id= "sFunActivacion" name="data-selector" > 
                             <option value="sigm">Sigmoide</option> 
@@ -107,7 +107,7 @@
                                     <div id="bAgregaEntrada"><i class="fa fa-circle-plus"></i></div>
                                     <div id="bRemueveEntrada"><i class="fa fa-circle-minus"></i></div>
                                 </div>
-                                <div id= "infoEntradas">1 nodo</div>
+                                <div id= "infoEntradas"></div>
                             </div>
                         </div>
                         <div id= "grupoNodo" class= "flex-container" style="justify-content: space-evenly; margin-left: 20px; width: 620px;" >
@@ -173,7 +173,13 @@
                     <div id="nn"></div>
                 </div>
                 <div id="extras">
-                    <div id ="algo" style="height: 110px;"></div>
+                    <div  style="height: 110px;">
+                        <div id="Data">
+                            <div id="algo">Error: -</div>
+                            <label for="lrname">Taza de Aprendizaje: </label>
+                            <input type="text" name="lrname" id="lr" value="0.1"><br>
+                        </div>
+                    </div>
                     <div id ="resultado" style="width: 400px; height: 400px;"></div>
                     <div id ="loss" style="height: 200px;"></div>
                 </div>

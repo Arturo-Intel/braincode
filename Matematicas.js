@@ -147,11 +147,11 @@ var Matematicas = function(t,e){
             return r;
         },
         tanh: (t) => { 
-            let r = (2 / (1 + Math.exp(-(2*t)))) - 1;
+            let r = 2 / (1 + Math.exp(-2 * t )) - 1;
             return r
         },
         tanh_d: (t) => { // 1 - t ** 2
-                        r = []
+            r = []
             for(let i = 0; i < t.length; i++) {
               tt = []
               for(let j = 0; j < t[i].length; j++) {

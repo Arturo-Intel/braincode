@@ -26,71 +26,123 @@ svg_grafos_canvas_h = 600;
 let nn;
 let _grafo;
 
-const Z = Utilidades.dataset_and(200, .3);
-//const X = Z['X']
-const X = [[0,0],[1,1],[0,1],[1,0]]; // valores de entrada
-//const Y = Z['y']//
-const Y = [[0],[1],[0],[0]];         // valores esperados
+let expectedLoss = 0.05;
+let dataSet = Utilidades.dataset_and();
+let X = [] // valores de entrada
+let Y = [] // valores esperados
 
+let p =  2;
+let topologia = [p,2,1];
 
-let topologia = [2,1,1];
-let LR = 0.01
+let LR = 0.1
 let epocas = 0;
-let loss =[] //?
+let loss =[] 
 let detenido = true;
 let func_act = Matematicas.sigm;
 let func_act_d = Matematicas.sigm_d;
-
-console.log("Inicio");
-dibujar();
-
 
 let _x= []
 let _x1= []
 let _y= []
 let _y1= []
 
-res = 100;
-let _simX = Utilidades.linspace(0, 1, res);
-let _simY = Utilidades.linspace(0, 1, res);
-let _resY = new Array(res).fill(0).map(() => new Array(res).fill(0));
+let _simX = []
+let _simY = []
+let _resY = []
+let resultado_layout =  []
+var loss_layout = []
 
-for(let i =0; i<X.length; i++){
-    if (Y[i] == 0) {
-        _x.push(X[i][0])
-        _y.push(X[i][1])
-    } else {
-        _x1.push(X[i][0])
-        _y1.push(X[i][1])
+var coloresResultado = [
+    [0, '#f18c91'],    
+    [1, '#8dc091']
+  ];
+
+console.log("Inicializando estructuras");
+inicializar_fondo();
+console.log("Inicio");
+dibujar();
+
+function inicializar_fondo() {
+    loss = [];
+    X = dataSet['X'] 
+    Y = dataSet['y'] 
+    let res = 100;
+    _simX = Utilidades.linspace(-.5, 1.5, res);
+    _simY = Utilidades.linspace(-.5, 1.5, res);
+    _resY = new Array(res).fill(0).map(() => new Array(res).fill(0));
+
+    _x= []
+    _x1= []
+    _y= []
+    _y1= []
+
+    for(let i =0; i<X.length; i++){
+        if (Y[i] == 0) {
+            _x.push(X[i][0])
+            _y.push(X[i][1])
+        } else {
+            _x1.push(X[i][0])
+            _y1.push(X[i][1])
+        }
     }
+
+
+    resultado_layout =  [{
+        x: _simX,
+        y: _simY,
+        z: _resY,
+        zmin: 0,
+        zmax: 1,
+        type: 'heatmap',
+        colorscale : coloresResultado,
+        showscale : false
+    }, {
+        x: _x,
+        y: _y,
+        mode: 'markers',
+        type: 'scatter',
+        showlegend: false,
+        marker: { color: "red", size : 10 }
+    }, {
+        x: _x1,
+        y: _y1,
+        mode: 'markers',
+        type: 'scatter',
+        showlegend: false,
+        marker: { color: "green", size : 10 } 
+    }]
+
+    Plotly.newPlot('resultado', resultado_layout,{margin: { t: 20, b: 25, r:25, l:50}})
+    
+    loss_layout = [{
+        x: Matematicas.rango(0, loss.length),
+        y: loss,
+        mode: 'lines',
+        
+    }]
+    Plotly.newPlot( 'loss', loss_layout, {margin: { t: 20, b: 25, r:25, l:50}});
+    
 }
 
-Plotly.newPlot('resultado',[ {
-    x: _simX,
-    y: _simY,
-    z: _resY,
-    type: 'heatmap',
-    //colorscale : [ [0, 'skyblue'], [1, 'salmon'] ], 
-    
-    
-}, {
-    x: _x,
-    y: _y,
-    mode: 'markers',
-    type: 'scatter'
-}, {
-    x: _x1,
-    y: _y1,
-    mode: 'markers',
-    type: 'scatter' 
-}])
 
+function seleccionarDataSet(control){
+    switch (control) {
+        case "and":
+            dataSet = Utilidades.dataset_and();
+            break;
+        case "or":
+            dataSet = Utilidades.dataset_or();
+            break;
+        case "xor":
+            dataSet = Utilidades.dataset_xor();
+            break;
+        case "circulos":
+            dataSet = Utilidades.circulo(300, .3, true);
+            break;
+    }    
+    inicializar_fondo();
+}
 
-Plotly.newPlot( 'loss', [{
-      x: [Matematicas.rango(0, loss.length)],
-      y: loss,
-      mode: 'lines'
-    }] );
 
 function  selecionarFunAct(control){
 
@@ -104,13 +156,16 @@ function  selecionarFunAct(control){
 }
 
 
-function dibujarGrafica(){
+function actualizarGrafica(){
 
-    Plotly.animate('loss', {
-        data: [{x: Matematicas.rango(0, loss.length), y: loss}]
-    }, {
-
-      transition: {
+    Plotly.animate('loss', 
+      [{
+        data: [{x: Matematicas.rango(0, loss.length),
+                y: loss
+              }] 
+      }], 
+      {
+        transition: {
         duration: 0
       },
       frame: {
@@ -123,23 +178,7 @@ function dibujarGrafica(){
         margin: { t: 20, b: 25, r:25, l:50} 
     })
 
-    Plotly.redraw('resultado',[ {
-        x: _simX,
-        y: _simY,
-        z: _resY,
-        type: 'heatmap',
-        
-    }, {
-        x: _x,
-        y: _y,
-        mode: 'markers',
-        type: 'scatter'
-    }, {
-        x: _x1,
-        y: _y1,
-        mode: 'markers',
-        type: 'scatter' 
-    }])
+    Plotly.redraw('resultado', resultado_layout)
    
 
 }
@@ -152,6 +191,11 @@ function computar () {
     for(const [i, simX] of _simX.entries()) { 
       for(const [j, simY] of _simY.entries()) {
         _resY[i][j] = Cerebro.entrenar(nn, [[simX, simY],[]], false)[0][0];
+        if(_resY[i][j] < 0.5){
+            _resY[i][j] = 0
+        }else if (_resY[i][j] >= 0.5){
+            _resY[i][j] = 1
+        }
       }
     }
   }
@@ -162,8 +206,9 @@ function computar () {
 
 function actualizar () {
     
-    dibujarGrafica();
+    actualizarGrafica();
     if(!detenido){
+        LR = document.getElementById("lr").value
         computar();
 
         _grafo = Cerebro.datosGrafo(nn);
@@ -171,13 +216,13 @@ function actualizar () {
     
         tmpStr = epocas.toString().padStart(5, '0');
         document.getElementById("epocasCounter").innerHTML = tmpStr.slice(0,2) + "," + tmpStr.slice(2);
-        document.getElementById("algo").innerHTML = loss[loss.length-1];
+        document.getElementById("algo").innerHTML = "Error: " +  loss[loss.length-1];
     }
     
-    // if(!detenido && loss[loss.length-1] !== undefined && loss[loss.length-1] < 0.15){
-    //     detenido = true
-    //     console.log("-Fin-")
-    // }
+    if(!detenido && loss[loss.length-1] !== undefined && loss[loss.length-1] < expectedLoss){
+        detener()
+        console.log("-Fin-")
+    }
     requestAnimationFrame(actualizar);
 }
 function correr(){
@@ -185,6 +230,11 @@ function correr(){
     document.getElementById("bDetener").style.display="block"
     detenido = false;
     epocas = 0;
+    
+
+    inicializar_fondo();
+    dibujar()
+    
     Dibujo.deshabilitar();
     console.log("correr")
 }
@@ -194,14 +244,22 @@ function detener(){
     document.getElementById("bDetener").style.display="none"
     detenido = true;
     Dibujo.habilitar();
+    
+
     console.log("detener")
 }
+
+tmp=  p>1?"s":""
+document.querySelector("#infoEntradas").innerHTML = topologia[0] + " nodo" + tmp;
 
 document.getElementById("bCorrer").onclick = correr;
 document.getElementById("bDetener").onclick = detener;
 document.getElementById("sFunActivacion").addEventListener("change", (event) => {
     selecionarFunAct(event.target.value);
-  });
+});
+document.getElementById("sDataSets").addEventListener("change", (event) => {
+    seleccionarDataSet(event.target.value);
+});
 
 window.requestAnimationFrame(actualizar);
 

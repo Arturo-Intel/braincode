@@ -44,7 +44,7 @@ var Dibujo = function() {
     }
     
     function removerEntradaBoton() {
-        if(topologia[0]-1 > 0) {
+        if(topologia[0]-p > 0) {
             topologia[0] -= 1;
             let tNodes= topologia[0] ==1? " nodo": " nodos"
             document.querySelector("#infoEntradas").innerHTML = topologia[0] + tNodes;  
@@ -81,11 +81,11 @@ var Dibujo = function() {
     }
     
     function reiniciar(){
-        topologia = [1,1];
+        topologia = [2,1];
         for(let i = 1; i <= 8 ; i++){
             document.querySelector("#infoNodoOculto"+i).innerHTML = "1 nodo";
             document.getElementById("nodoOculto"+i).style.display="none";
-            document.querySelector("#infoEntradas").innerHTML = "1 nodo"
+            document.querySelector("#infoEntradas").innerHTML = topologia[0] +" nodos"
         }
         dibujar();
     }
@@ -182,13 +182,15 @@ var Dibujo = function() {
                 .attr("dx", "-.35em")
                 .attr("dy", ".35em")
                 .text(function(d) { return d.label; });
-
+            
+            
             
         },
         agrupadores: () => {
             agrupador(_nodes[0].x - 30, 10, 60, height, "groupRectEntrada");
             agrupador(90, 10, 620, height, "groupRectOculta");
             agrupador(_nodes[_nodes.length-1].x - 30, 10, 60, height, "groupRectOculta");
+          
         },
         resultado: () => {
             var data = [10, 15, 20, 25, 30];
@@ -241,6 +243,9 @@ var Dibujo = function() {
             document.getElementById("bRemueveNodoOculto7").onclick = 
             document.getElementById("bRemueveNodoOculto8").onclick = 
             document.getElementById("bReiniciarEstructura").onclick = NaN;
+            document.getElementById("sDataSets").disabled=true;
+            document.getElementById("sFunActivacion").disabled=true;
+            document.getElementById("lr").disabled=true;
         },
         habilitar: () => {
             document.getElementById("bAgregaEntrada").onclick = agregaEntradaBoton;
@@ -265,6 +270,10 @@ var Dibujo = function() {
             document.getElementById("bRemueveNodoOculto8").onclick = removerNodoOcultoBoton;
 
             document.getElementById("bReiniciarEstructura").onclick = reiniciar;
+
+            document.getElementById("sDataSets").disabled=false;
+            document.getElementById("sFunActivacion").disabled=false;
+            document.getElementById("lr").disabled=false;
         }
     }
 }();
