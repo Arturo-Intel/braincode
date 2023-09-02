@@ -15,15 +15,15 @@
                 pointer-events: none;
             }
 
-            .node:hover {
-                stroke: #e27171;
-                stroke-opacity: .6;
-                stroke-width: 4px;
-            }
-
             .link {
-                stroke: #999;
-                stroke-opacity: .6;
+                stroke: #104c53;
+            }
+            #pseudocodigo {
+                height: 350px;
+                border: 1px solid #ddd;
+                background: #f1f1f1;
+                overflow-y: auto;
+                width: 1200px; 
             }
             #log {
                 height: 150px;
@@ -185,6 +185,20 @@
                     <div id ="loss" style="height: 200px;"></div>
                 </div>
             </div>
+        </div>
+        <div id="pseudocodigo">
+             1.Cargamos Data Set </p>
+             2.Mientras ultimo valor del arreglo loss > Error minimo requerido</p>
+             3.  Inicializamos la matriz OUT como [[NaN, X]] </p>
+             4.  fordwardPass(red_neuronal, out) </p>
+             5.  Si vamos a entrenar </p> 
+             6.      backwardPass(red_neuronal, out)</p>
+             7.  Guardamos en Loss el ultimo valor insertado en la matriz OUT </p>
+             8.  si epocas MOD 5 </p>
+             9.    Guardamos en el arreglo Loss el valor de L2_COST usando pY y el arreglo de valores esperado </p>
+            10.    Simulamos el resultado de la red neuronal con los valores de la malla </p>
+            11.  epocas + 1 </p>
+            12.  Actualizamos graficos </p>
         </div>
         <div id="log"></div>
         

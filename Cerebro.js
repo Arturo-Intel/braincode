@@ -69,7 +69,7 @@ var Cerebro = function(t,e) {
       // Cuando W[1][1] significa que es un solo nodo con una sola conexion 
       for(let i = 0; i <  red_neuronal[rev[indice]].W.length; i++){
         for(let j = 0; j <  red_neuronal[rev[indice]].W[i].length; j++) {
-          red_neuronal[rev[indice]].W[i][j] = (red_neuronal[rev[indice]].W[i][j] - bb[i][j]) * LR;
+          red_neuronal[rev[indice]].W[i][j] = red_neuronal[rev[indice]].W[i][j] - bb[i][j] * LR;
         }
       }
     } 
@@ -96,14 +96,14 @@ var Cerebro = function(t,e) {
             label = "h"+j;
             color = "#999999";
           }
-          datos.push({"color": color ,"label": label, "layer": i+1, "W": e.W[j]});
+          datos.push({"color": color ,"label": label, "layer": i+1, "Ws": e.W[j]});
         }
       }
       
       //agregamos la salida
       datos.push({"color": "salmon", "label": "o", "layer": topologia.length});
       
-      console.log(red_neuronal)
+      //console.log(red_neuronal)
       //console.log(datos)
       
       return datos;

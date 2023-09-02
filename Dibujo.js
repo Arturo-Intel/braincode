@@ -138,12 +138,36 @@ var Dibujo = function() {
             var links = [];
             nodes.map(function(d, i) {
                 for (var n in nodes) {
+                    
                     if (d.layer + 1 == nodes[n].layer) {
-                         links.push({"source": parseInt(i), "target": parseInt(n), "value": 1}) 
+                        
+                        
+                        links.push({"source": parseInt(i), "target": parseInt(n), "value": parseFloat(1.0)}) 
                     }
+                    
                 }
             }).filter(function(d) { return typeof d !== "undefined"; });
             _nodes = nodes;
+
+
+            // agregamos el valor de W para cada link creado
+            let k=0;
+            for(let i = 0; i<nodes.length; i++){
+                if(nodes[i].Ws !== undefined){
+                    for(let j = 0; j<nodes[i].Ws.length; j++){
+                        let v = nodes[i].Ws[j]
+                        let tmp = v<0 ? Math.abs(v)*2 : v*4
+                        if(detenido){
+                            links[k].value = 1.0
+                        }else{
+                            links[k].value = tmp;
+                        }
+                        k++;
+                    }
+                }
+
+            }
+            
             // dibujamos las lineas usando los datos de la estructura links
             var link = svg.selectAll(".link")
                 .data(links)
@@ -153,8 +177,8 @@ var Dibujo = function() {
                 .attr("y1", function(d) { return nodes[d.source].y; })
                 .attr("x2", function(d) { return nodes[d.target].x; })
                 .attr("y2", function(d) { return nodes[d.target].y; })
-                .style("stroke-width", function(d) { return Math.sqrt(d.value); });
-
+                .style("stroke-width", function(d) { return d.value; });
+            
             // dibujamos los nodos usando los datos de la estructura nodes
             var node = svg.selectAll(".node")
                 .data(nodes)

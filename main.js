@@ -26,12 +26,12 @@ svg_grafos_canvas_h = 600;
 let nn;
 let _grafo;
 
-let expectedLoss = 0.05;
+let expectedLoss = 0.01;
 let dataSet = Utilidades.dataset_and();
 let X = [] // valores de entrada
 let Y = [] // valores esperados
 
-let p =  2;
+let p =  dataSet['X'][0].length;
 let topologia = [p,2,1];
 
 let LR = 0.1
@@ -45,10 +45,10 @@ let _x= []
 let _x1= []
 let _y= []
 let _y1= []
-
 let _simX = []
 let _simY = []
 let _resY = []
+
 let resultado_layout =  []
 var loss_layout = []
 
@@ -63,6 +63,7 @@ console.log("Inicio");
 dibujar();
 
 function inicializar_fondo() {
+    epocas = 0;
     loss = [];
     X = dataSet['X'] 
     Y = dataSet['y'] 
@@ -214,10 +215,8 @@ function actualizar () {
     if(!detenido){
         LR = document.getElementById("lr").value
         computar();
-
         _grafo = Cerebro.datosGrafo(nn);
         Dibujo.grafo(_grafo);
-    
         tmpStr = epocas.toString().padStart(5, '0');
         document.getElementById("epocasCounter").innerHTML = tmpStr.slice(0,2) + "," + tmpStr.slice(2);
         document.getElementById("algo").innerHTML = "Error: " +  loss[loss.length-1];
@@ -240,11 +239,7 @@ function correr(){
     }
     document.getElementById("bCorrer").style.display="none"
     document.getElementById("bDetener").style.display="block"
-    
     detenido = false;
-
-    epocas = 0;
-    
 
     inicializar_fondo();
     dibujar()
@@ -258,8 +253,6 @@ function detener(){
     document.getElementById("bDetener").style.display="none"
     detenido = true;
     Dibujo.habilitar();
-    
-
     console.log("detener")
 }
 
