@@ -145,13 +145,17 @@ function seleccionarDataSet(control){
 
 
 function  selecionarFunAct(control){
-
-    if (control == "sigm"){
-        func_act = Matematicas.sigm
-        func_act_d = Matematicas.sigm_d
-    } else if (control == "tanh") {
-        func_act = Matematicas.tanh
-        func_act_d = Matematicas.tanh_d
+    switch(control){
+        case "sigm":
+            func_act = Matematicas.sigm
+            func_act_d = Matematicas.sigm_d
+            break;
+        case "tanh":
+            func_act = Matematicas.tanh
+            func_act_d = Matematicas.tanh_d
+            break;
+        case "relu":
+            break; 
     }
 }
 

@@ -161,6 +161,20 @@ var Matematicas = function(t,e){
             }
             return r;
         }, 
+        relu:(t) => {
+            return t > 0 ? t: 0;
+        },
+        relu_d:(t) => {
+            r = []
+            for(let i = 0; i < t.length; i++) {
+              tt = []
+              for(let j = 0; j < t[i].length; j++) {
+                tt.push(t > 0 ? 1: 0);
+              }
+              r.push(tt);
+            }
+            return r;
+        },
         //funcion de coste - Error cuadratico medio
         l2_cost: (Yp=array, Yr=array) => { //mean( (Yp - Yr) ** 2)
             t = []
