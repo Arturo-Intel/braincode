@@ -226,9 +226,19 @@ function actualizar () {
     requestAnimationFrame(actualizar);
 }
 function correr(){
+    if(p != topologia[0]){
+        alert('No puedo iniciar!! - El numero de nodos de entrada debe de ser igual al del dataset (' + p + ' entrada(s)). ')
+        topologia[0] = p
+        
+        Dibujo.actualizarDatos()
+        dibujar()
+        return
+    }
     document.getElementById("bCorrer").style.display="none"
     document.getElementById("bDetener").style.display="block"
+    
     detenido = false;
+
     epocas = 0;
     
 

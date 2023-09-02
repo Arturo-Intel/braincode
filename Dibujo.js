@@ -15,6 +15,8 @@ var Dibujo = function() {
         .style("fill-opacity",0.1);
     }
 
+
+
     function agregaEntradaBoton() {
         if(topologia[0]+1 <= 8) {
             topologia[0] += 1;
@@ -44,7 +46,7 @@ var Dibujo = function() {
     }
     
     function removerEntradaBoton() {
-        if(topologia[0]-p > 0) {
+        if(topologia[0]-1 > 0) {
             topologia[0] -= 1;
             let tNodes= topologia[0] ==1? " nodo": " nodos"
             document.querySelector("#infoEntradas").innerHTML = topologia[0] + tNodes;  
@@ -130,7 +132,6 @@ var Dibujo = function() {
                     d["x"] = (d.layer - 0.5) * xdist;
                 }
                 d["y"] = (d.lidx -0.5) * ydist ;
-                //d["y"] = ( ( (d.lidx - 0.5) + ((largestLayerSize - netsize[d.layer]) /2 ) ) * ydist )+10 ;
             });
 
             // generamos las lineas que conectan dos nodos y los agregamos a la estructura links
@@ -153,15 +154,6 @@ var Dibujo = function() {
                 .attr("x2", function(d) { return nodes[d.target].x; })
                 .attr("y2", function(d) { return nodes[d.target].y; })
                 .style("stroke-width", function(d) { return Math.sqrt(d.value); });
-            
-            // svg.append("line")
-            //     .attr("class", "link")
-            //     .attr("x1", function(d) { return nodes[nodes.length-1].x; })
-            //     .attr("y1", function(d) { return nodes[nodes.length-1].y; })
-            //     .attr("x2", width)
-            //     .attr("y2", function(d) { return nodes[nodes.length-1].y; })
-            //     .style("stroke-width", 3);
-
 
             // dibujamos los nodos usando los datos de la estructura nodes
             var node = svg.selectAll(".node")
@@ -274,6 +266,23 @@ var Dibujo = function() {
             document.getElementById("sDataSets").disabled=false;
             document.getElementById("sFunActivacion").disabled=false;
             document.getElementById("lr").disabled=false;
+        }, 
+        actualizarDatos: () =>{
+            txtNodo= []
+            for (let i=0; i< topologia.length-1; i++)
+            {
+                if(topologia[i] > 0){
+                    txtNodo[i] = ' nodos'
+                }else{
+                    txtNodo[i] = 'nodo'
+                }
+    
+                if (i == 0){
+                    document.querySelector("#infoEntradas").innerHTML = topologia[0] + txtNodo[0]
+                }else{
+                    document.querySelector("#infoNodoOculto"+i).innerHTML = topologia[i] + txtNodo[i]; 
+                }
+            }
         }
     }
 }();
