@@ -136,43 +136,23 @@ var Matematicas = function(t,e){
         },
         // derivada de sigm
         sigm_d: (t) => { //t * (1 - t);
-            r = []
-            for(let i = 0; i < t.length; i++) {
-              tt = []
-              for(let j = 0; j < t[i].length; j++) {
-                tt.push(t[i][j] * (1 - t[i][j]));
-              }
-              r.push(tt);
-            }
-            return r;
+            let r = t * (1 - t);
+            return r
         },
         tanh: (t) => { 
             let r = 2 / (1 + Math.exp(-2 * t )) - 1;
             return r
         },
         tanh_d: (t) => { // 1 - t ** 2
-            r = []
-            for(let i = 0; i < t.length; i++) {
-              tt = []
-              for(let j = 0; j < t[i].length; j++) {
-                tt.push(1 - t[i][j] ** 2);
-              }
-              r.push(tt);
-            }
+            let  r = 1 - t ** 2
             return r;
         }, 
         relu:(t) => {
-            return t > 0 ? t: 0;
+            let r = t > 0 ? t: 0;
+            return r
         },
         relu_d:(t) => {
-            r = []
-            for(let i = 0; i < t.length; i++) {
-              tt = []
-              for(let j = 0; j < t[i].length; j++) {
-                tt.push(t > 0 ? 1: 0);
-              }
-              r.push(tt);
-            }
+            let  r = t > 0 ? 1: 0
             return r;
         },
         //funcion de coste - Error cuadratico medio

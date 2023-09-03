@@ -1,23 +1,23 @@
-(function () {
-    if (!console) {
-        console = {};
-    }
-    var old = console.log;
-    var logger = document.getElementById('log');
-    console.log = function (message) {
-        var time = new Date(Date.now()).toLocaleTimeString();
-        var timestamp = '[' + time + '] ';
-        if (typeof message == 'object') {
-            logger.innerHTML += timestamp + (JSON && JSON.stringify ? JSON.stringify(message) : String(message)) + '<br />';
-        } else {
-            logger.innerHTML += timestamp + message + '<br />';
-        }
-        logger.scrollTop = logger.scrollHeight;
-        old(message);
-    }
-    document.getElementById("bDetener").style.display="none";
+// (function () {
+//     if (!console) {
+//         console = {};
+//     }
+//     var old = console.log;
+//     var logger = document.getElementById('log');
+//     console.log = function (message) {
+//         var time = new Date(Date.now()).toLocaleTimeString();
+//         var timestamp = '[' + time + '] ';
+//         if (typeof message == 'object') {
+//             logger.innerHTML += timestamp + (JSON && JSON.stringify ? JSON.stringify(message) : String(message)) + '<br />';
+//         } else {
+//             logger.innerHTML += timestamp + message + '<br />';
+//         }
+//         logger.scrollTop = logger.scrollHeight;
+//         old(message);
+//     }
+//     document.getElementById("bDetener").style.display="none";
     
-})();
+// })();
 
 // 8x8 Capas ocultas max
 
@@ -38,8 +38,8 @@ let LR = 0.1
 let epocas = 0;
 let loss =[] 
 let detenido = true;
-let func_act = Matematicas.sigm;
-let func_act_d = Matematicas.sigm_d;
+let func_act ;
+let func_act_d ; 
 
 let _x= []
 let _x1= []
@@ -147,6 +147,11 @@ function seleccionarDataSet(control){
 
 function  selecionarFunAct(control){
     switch(control){
+        case "nada":
+            func_act =
+            func_act_d = undefined
+            console.log(func_act)
+            break;
         case "sigm":
             func_act = Matematicas.sigm
             func_act_d = Matematicas.sigm_d
@@ -156,6 +161,8 @@ function  selecionarFunAct(control){
             func_act_d = Matematicas.tanh_d
             break;
         case "relu":
+            func_act = Matematicas.relu
+            func_act_d = Matematicas.relu_d
             break; 
     }
 }
@@ -189,10 +196,13 @@ function actualizarGrafica(){
 }
 
 function computar () {
+  ///*** Back Propagation
   let pY = Cerebro.entrenar(nn, X, true);
   if (epocas % 5 == 0) {
+    // **** Calculamos el error global (error cuadrático medio)
     loss.push(Matematicas.l2_cost(pY, Y));
     
+    // Predecimos el resultado de la red con valores de 50,50
     for(const [i, simX] of _simX.entries()) { 
       for(const [j, simY] of _simY.entries()) {
         _resY[i][j] = Cerebro.entrenar(nn, [[simX, simY],[]], false)[0][0];
@@ -203,6 +213,7 @@ function computar () {
         }
       }
     }
+
   }
   epocas += 1;
   //debug una sola ejecucuion
@@ -232,9 +243,13 @@ function correr(){
     if(p != topologia[0]){
         alert('No puedo iniciar!! - El numero de nodos de entrada debe de ser igual al del dataset (' + p + ' entrada(s)). ')
         topologia[0] = p
-        
         Dibujo.actualizarDatos()
         dibujar()
+        return
+    }
+    console.log(func_act)
+    if(func_act === undefined){
+        alert("Elige una funcion de activación")
         return
     }
     document.getElementById("bCorrer").style.display="none"

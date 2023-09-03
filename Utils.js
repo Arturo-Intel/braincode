@@ -22,6 +22,18 @@ var Utilidades = function(t,e){
           if (num > 1 || num < 0) return Utilidades.random_normal_dist() // resample between 0 and 1
           return num
         },
+        // funcion para aplicar una funcion (func) a todos los elementos de la matriz M
+        aplicar : (M, func) => {
+          let a = [] 
+          for(let i = 0; i < M.length; i++){
+            let aa = [];
+            for(let j = 0; j < M[i].length; j++) {
+              aa.push(func(M[i][j]));
+            }
+            a.push(aa);
+          }
+          return a;
+        }, 
         dataset_and: () => {
           _X = [[0,0],[0,1], [1,0], [1,1]]
           y = [[0],[0],[0],[1]]
