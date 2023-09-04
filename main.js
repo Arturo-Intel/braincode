@@ -1,23 +1,23 @@
-// (function () {
-//     if (!console) {
-//         console = {};
-//     }
-//     var old = console.log;
-//     var logger = document.getElementById('log');
-//     console.log = function (message) {
-//         var time = new Date(Date.now()).toLocaleTimeString();
-//         var timestamp = '[' + time + '] ';
-//         if (typeof message == 'object') {
-//             logger.innerHTML += timestamp + (JSON && JSON.stringify ? JSON.stringify(message) : String(message)) + '<br />';
-//         } else {
-//             logger.innerHTML += timestamp + message + '<br />';
-//         }
-//         logger.scrollTop = logger.scrollHeight;
-//         old(message);
-//     }
-//     document.getElementById("bDetener").style.display="none";
+(function () {
+    if (!console) {
+        console = {};
+    }
+    var old = console.log;
+    var logger = document.getElementById('log');
+    console.log = function (message) {
+        var time = new Date(Date.now()).toLocaleTimeString();
+        var timestamp = '[' + time + '] ';
+        if (typeof message == 'object') {
+            logger.innerHTML += timestamp + (JSON && JSON.stringify ? JSON.stringify(message) : String(message)) + '<br />';
+        } else {
+            logger.innerHTML += timestamp + message + '<br />';
+        }
+        logger.scrollTop = logger.scrollHeight;
+        old(message);
+    }
+    document.getElementById("bDetener").style.display="none";
     
-// })();
+})();
 
 // 8x8 Capas ocultas max
 
@@ -27,15 +27,12 @@ let nn;
 let _grafo;
 
 let expectedLoss = 0.01;
-let dataSet = Utilidades.dataset_and();
+let dataSet = [];
 let X = [] // valores de entrada
 let Y = [] // valores esperados
-
-let p =  dataSet['X'][0].length;
-let topologia = [p,2,1];
-
-let LR = 0.1
 let epocas = 0;
+let LR = document.getElementById("lr").value
+
 let loss =[] 
 let detenido = true;
 let func_act ;
@@ -48,18 +45,28 @@ let _y1= []
 let _simX = []
 let _simY = []
 let _resY = []
-
 let resultado_layout =  []
 var loss_layout = []
+console.log("Inicio");
+seleccionarDataSet("and")
+
+
+let p =  dataSet['X'][0].length;
+let topologia = [p,2,1];
+
+
+
+
+
 
 var coloresResultado = [
     [0, '#f18c91'],    
     [1, '#8dc091']
   ];
 
+
 console.log("Inicializando estructuras");
 inicializarEstructuras();
-console.log("Inicio");
 dibujar();
 
 function inicializarEstructuras() {
@@ -141,6 +148,7 @@ function seleccionarDataSet(control){
             dataSet = Utilidades.circulo(300, .3, true);
             break;
     }    
+    console.log("Data set seleccionado: "+ control)
     inicializarEstructuras();
 }
 
@@ -150,7 +158,6 @@ function  selecionarFunAct(control){
         case "nada":
             func_act =
             func_act_d = undefined
-            console.log(func_act)
             break;
         case "sigm":
             func_act = Matematicas.sigm
@@ -165,6 +172,7 @@ function  selecionarFunAct(control){
             func_act_d = Matematicas.relu_d
             break; 
     }
+    console.log("Funcion de activacion seleccionada: "+control)
 }
 
 
@@ -195,7 +203,7 @@ function actualizarGrafica(){
 
 }
 
-function computar () {
+function backPropagation () {
   ///*** Back Propagation
   let pY = Cerebro.entrenar(nn, X, true);
   if (epocas % 5 == 0) {
@@ -225,7 +233,7 @@ function actualizar () {
     actualizarGrafica();
     if(!detenido){
         LR = document.getElementById("lr").value
-        computar();
+        backPropagation();
         _grafo = Cerebro.datosGrafo(nn);
         Dibujo.grafo(_grafo);
         tmpStr = epocas.toString().padStart(5, '0');
@@ -235,20 +243,22 @@ function actualizar () {
     
     if(!detenido && loss[loss.length-1] !== undefined && loss[loss.length-1] < expectedLoss){
         detener()
-        console.log("-Fin-")
+        console.log("La red neuronal ha sido entrenada. ")
+        console.log("Diferencia entre la Salida obtenida y el valor esperado: "+ loss[loss.length-1])
     }
     requestAnimationFrame(actualizar);
 }
 function correr(){
     if(p != topologia[0]){
+        console.log("ERROR - Nodos de entrada diferentes al numero de entradas del Data Set")
         alert('No puedo iniciar!! - El numero de nodos de entrada debe de ser igual al del dataset (' + p + ' entrada(s)). ')
         topologia[0] = p
         Dibujo.actualizarDatos()
         dibujar()
         return
     }
-    console.log(func_act)
     if(func_act === undefined){
+        console.log("ERROR - No se ha seleccionado una funcion de activación")
         alert("Elige una funcion de activación")
         return
     }
@@ -260,7 +270,8 @@ function correr(){
     dibujar()
     
     Dibujo.deshabilitar();
-    console.log("correr")
+    console.log("Taza de aprendizaje seleccionada: "+LR)
+    console.log("Ejecutando algoritmo de Back Propagation... Un momento por favor")
 }
 
 function detener(){
@@ -268,7 +279,7 @@ function detener(){
     document.getElementById("bDetener").style.display="none"
     detenido = true;
     Dibujo.habilitar();
-    console.log("detener")
+    console.log(".")
 }
 
 tmp=  p>1?"s":""
@@ -297,4 +308,5 @@ function dibujar() {
     Dibujo.grafo(_grafo);
     Dibujo.agrupadores();
     Dibujo.habilitar();
+    console.log("Dibujamos la representacion del grafo en pantalla")
 }

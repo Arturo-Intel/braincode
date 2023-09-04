@@ -191,67 +191,7 @@
                 </div>
             </div>
         </div>
-        <div id="pseudocodigo">
-            <table>
-                <!-- <tr><td>incializarEstructuras()</td></tr>
-                <tr><td>---- Creamos dataSets</td></tr>
-                <tr><td>---- Iniciamos objetos Plotly</td></tr>
-                <tr><td>dibujar()</td></tr>
-                <tr><td>---- inicializaGrafo con topologia</td></tr>
-                <tr><td>---- dibuja grafo en SVG</td></tr>
-                <tr><td>actualizar()</td></tr>
-                <tr><td>---- Iniciamos ciclo infinito </td></tr>
-                <tr><td><span class="tab"></span>actualizarGrafica()</td></tr>
-                <tr><td><span class="tab"></span>---- redibuja los datos en las graficas</td></tr>
-                <tr><td><span class="tab"></span>SI no esta DETENIDO</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>computar()</td></tr> -->
-                <tr><td><span class="tab"></span>---- Entrenamos la red - entrenar()</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>algoritmo de back propagation</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>---- Propagar hacia delante()</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- Calculamos Z</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- Calculamos a(Z)</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- Guardamos [Z,a(Z)] en SALIDAS</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>---- Si vamos a entrenar</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span>----Propagar hacia atras()</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Calculamos el Error:</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- SI es la primera capa</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Calculamos el error utilizando la derivada parcial de la funcion de Coste por la derivada de la funcion de activacion</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- SI No es la primera capa</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Calculamos el error utilizando el peso de la capa anterior por la delta anterior por derivada de la funcion de activacion</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- FIN SI</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>Calculamos el descenso del gradiente:</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- Obtenemos la media de todas la deltas</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- Para el sesgo (b) restando el SESGO menos la MEDIA DE LAS DELTAS por la TAZA DE APRENDIZAJE</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- Para el peso (W) restando el PESO menos el producto de la ACTIVACION DE LA CAPA ANTERIOR por las DELTAS por la TAZA DE APRENDIZAJE</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span><span class="tab"></span><span class="tab"></span>---- Actualizamos los Pesos y sesgos</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>---- FIN SI</td></tr>
-                <tr><td><span class="tab"></span>Retornamos el valor de SALIDA obtenido con los Pesos y sesgos</td></tr>
-                <tr><td><span class="tab"></span>---- Cada 5 EPOCAS</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>Calculamos el error global (error cuadrático medio) entre el valor obtenido del entrenamiento vs el valor esperado</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>Usando la RN en su estado actual predecimos el error global usando una matriz de 50x50 - entrenar(false)</td></tr>
-                <tr><td><span class="tab"></span>---- Fin CADA</td></tr>
-                <tr><td><span class="tab"></span>---- Aumentamos una Epoca</td></tr>
-                <!-- <tr><td><span class="tab"></span><span class="tab"></span>Actualizamos graficos y UI</td></tr>
-                <tr><td><span class="tab"></span>FIN SI</td></tr>
-                <tr><td><span class="tab"></span>SI el error global es menor al umbral de convergencia</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>detener()</td></tr>
-                <tr><td><span class="tab"></span><span class="tab"></span>---- DETENIDO es Verdadero</td></tr>
-                <tr><td><span class="tab"></span>FIN SI</td></tr>
-                <tr><td><span class="tab"></span>Llamamos de nuevo a actualizar() cada nuevo frame</td></tr> -->
-                <!-- <tr><td><pre>Cargamos Data Set</pre></td></tr>
-                <tr><td><pre>Mientras la diferencia entre esperado y obtenido sea > umbral de error (0.015)</pre></td></tr>
-                <tr><td><pre>   Inicializamos la matriz SALIDAS como [[NaN, ENTRADAS]]</pre></td></tr>
-                <tr><td><pre>   PropagacionHaciaAdelante(RED_NEURONAL, SALIDA)</pre> </td></tr>
-                <tr><td><pre>   Si vamos a entrenar</pre> </td></tr>
-                <tr><td><pre>       PropagacionHaciaAtras(RED_NEURONAL, SALIDA)</pre></td></tr>
-                <tr><td><pre>   Guardamos la diferencia entre el ultimo valor de SALIDA obtenido vs el esperado</pre></td></tr>
-                <tr><td><pre>   Cada 5 EPOCAS</pre></td></tr>
-                <tr><td><pre>       Guardamos en el arreglo Loss el valor de L2_COST usando pY y el arreglo de valores esperado</pre></td></tr>
-                <tr><td><pre>       Simulamos el resultado de la red neuronal con los valores de la malla</pre></td></tr>
-                <tr><td><pre>       Aumentamos EPOCAS por 1</pre></td></tr>
-                <tr><td><pre>   Actualizamos graficos</pre></td></tr> -->
-            </table>
-        </div>
+
         <div id="log"></div>
         
         <script src="Dibujo.js"></script>

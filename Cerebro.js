@@ -109,7 +109,6 @@ var Cerebro = function(t,e) {
           nn.push(new CapaNeuronal(e, topologia[i+1]))
         }
       }
-      console.log(nn)
       return nn;
     },
     datosGrafo: (red_neuronal) =>{
