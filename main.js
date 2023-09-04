@@ -58,11 +58,11 @@ var coloresResultado = [
   ];
 
 console.log("Inicializando estructuras");
-inicializar_fondo();
+inicializarEstructuras();
 console.log("Inicio");
 dibujar();
 
-function inicializar_fondo() {
+function inicializarEstructuras() {
     epocas = 0;
     loss = [];
     X = dataSet['X'] 
@@ -141,7 +141,7 @@ function seleccionarDataSet(control){
             dataSet = Utilidades.circulo(300, .3, true);
             break;
     }    
-    inicializar_fondo();
+    inicializarEstructuras();
 }
 
 
@@ -256,7 +256,7 @@ function correr(){
     document.getElementById("bDetener").style.display="block"
     detenido = false;
 
-    inicializar_fondo();
+    inicializarEstructuras();
     dibujar()
     
     Dibujo.deshabilitar();

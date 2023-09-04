@@ -56,7 +56,6 @@ var Cerebro = function(t,e) {
         // dL = dC/daL . daL/DZL
         // funcion de coste: diferencia entre el valor esperado y el obtenido
 
-        // l2_cost[1](a, Y) * neural_net[l].act_f[1](a)
         aa = Matematicas.l2_cost_d(a, Y); // derivada de la funcion de coste
         bb = Utilidades.aplicar(a, func_act_d); // derivada de la funcion de activacion 
         
